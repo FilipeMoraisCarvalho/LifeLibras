@@ -1,0 +1,63 @@
+create database LiveLIBRAS;
+use LiveLIBRAS;
+
+create table usuario(
+id int auto_increment primary key,
+usuario varchar(200) not null,
+senha varchar(200) not null,
+email varchar(200) not null);
+
+create table categoria(
+id int auto_increment primary key,
+nome varchar(200) not null,
+link varchar(200)
+);
+
+create table subcategoria(
+id int auto_increment primary key,
+nome varchar(200) not null,
+link varchar(200),
+idPai int,
+foreign key (idPai) references categoria (id));
+
+create table licao(
+id int auto_increment primary key,
+descricao varchar(200) not null,
+url varchar(500) not null,
+idCategoria int,
+foreign key (idCategoria) references categoria (id));
+
+create table alternativa(
+id int auto_increment primary key,
+url varchar(500) not null);
+
+create table pratica(
+id int auto_increment primary key,
+descricao varchar(500) not null,
+idCategoria int,
+idAlternativa int,
+foreign key (idCategoria) references categoria (id),
+foreign key (idAlternativa) references alternativa (id));
+
+create table praticaAlternativa(
+idAlternativa int not null,
+idPratica int not null,
+foreign key (idAlternativa) references alternativa (id),
+foreign key (idPratica) references pratica (id));
+
+create table usuarioPratica(
+idUsuario int not null,
+idPratica int not null,
+idAlternativa int not null,
+foreign key (idUsuario) references usuario (id),
+foreign key (idPratica) references pratica (id),
+foreign key (idAlternativa) references alternativa (id));
+
+insert into categoria(nome,link) values
+('Animais',''),('Alimentos',''),('Saudações','saudacao.php'),('Frases Úteis','frasesuteis.php'),('Alfabeto','alfabeto.php'),('Sujeitos','sujeitos.php');
+insert into subcategoria(nome,idPai,link) values
+('Aves',1,'aves.php'),('Mamíferos',1,'mamiferos.php'),('Répteis',1,'repteis.php'),('Insetos',1,'insetos.php'),('Atividade',1,''),
+('Frutas',2,'frutas'),('Legumes',2,'legumes.php'),('Verduras',2,'verduras.php'),('Outros',2,'outros.php'),('Atividade',2,'');
+
+
+										
